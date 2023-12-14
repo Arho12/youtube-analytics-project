@@ -58,4 +58,3 @@ class Channel:
     def to_json(self, filename):
         with open(filename, 'w', encoding='utf-8') as file:
             file.write(json.dumps(self.channel))
-
