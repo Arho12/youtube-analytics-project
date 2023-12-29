@@ -7,14 +7,19 @@ class Video:
 
     def __init__(self, video_id):
         self.video_id = video_id
-        video_response = self.get_service().videos().list(part='snippet,statistics,contentDetails,topicDetails',
-                                                          id=video_id
-                                                          ).execute()
+        try:
+            video_response = self.get_service().videos().list(part='snippet,statistics,contentDetails,topicDetails',
+                                                              id=video_id
+                                                              ).execute()
 
-        self.title = video_response["items"][0]["snippet"]["title"]
-        self.url = f'https://www.youtube.com/channel/UC-OVMPlMA3-YCIeg4z5z23A{self.video_id}'
-        self.view_count = video_response["items"][0]["statistics"]["viewCount"]
-        self.like_count = video_response["items"][0]["statistics"]["likeCount"]
+            self.title = video_response["items"][0]["snippet"]["title"]
+            self.url = f'https://www.youtube.com/channel/UC-OVMPlMA3-YCIeg4z5z23A{self.video_id}'
+            self.view_count = video_response["items"][0]["statistics"]["viewCount"]
+            self.like_count = video_response["items"][0]["statistics"]["likeCount"]
+        except IndexError:
+            self.title = None
+            self.like_count = None
+            self.view_count = None
 
     def __str__(self):
         return f'{self.title}'
